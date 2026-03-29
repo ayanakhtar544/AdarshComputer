@@ -2,9 +2,9 @@ import ImageKit from "imagekit";
 import { NextResponse } from "next/server";
 
 const imagekit = new ImageKit({
-  publicKey: "public_xqkMAX8K3tME//Ug061tFSOJfcY=",
-  privateKey: "private_gPsfbdoaQveWo4HIIl0aW2q/8rg=",
-  urlEndpoint: "https://ik.imagekit.io/chauhancomputers",
+  urlEndpoint: process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT,
+  publicKey: process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY,
+  privateKey: process.env.IMAGEKIT_PRIVATE_KEY
 });
 
 export async function GET() {
