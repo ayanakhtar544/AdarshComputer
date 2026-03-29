@@ -14,8 +14,7 @@ import { useAuth } from "@/context/AuthContext";
 import { 
   Phone, Mail, Monitor, Laptop, ChevronRight, Zap, 
   Clock, ShieldCheck, RefreshCcw, Truck, Search, 
-  Heart, ShoppingBag, User, Star, Cpu, Menu, ArrowRight, MapPin,
-  Facebook, Instagram, Twitter, CreditCard
+  Heart, ShoppingBag, User, Star, Cpu, Menu, ArrowRight, MapPin, CreditCard
 } from "lucide-react";
 
 // ============================================================================
@@ -350,7 +349,7 @@ export default function Home() {
              {searchResults.length === 0 ? (
                <div className="text-center py-20 flex flex-col items-center">
                   <div className="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center mb-6"><Search size={40} className="text-slate-300"/></div>
-                  <p className="text-slate-500 font-medium text-lg">No products found for "<span className="text-slate-900 font-bold">{searchTerm}</span>"</p>
+                  <p className="text-slate-500 font-medium text-lg">No products found for "<span className="text-slate-900 font-bold">{searchTerm}</span>&quot;</p>
                   <button onClick={() => setSearchTerm('')} className="mt-6 bg-slate-900 text-white px-8 py-3 rounded-xl font-bold hover:bg-red-600 transition-colors shadow-lg">Clear Search</button>
                </div>
              ) : (
@@ -561,13 +560,9 @@ export default function Home() {
                     </div>
                   </Link>
                   <p className="text-slate-400 text-sm leading-relaxed mb-8 font-medium">
-                    India's most trusted destination for premium refurbished tech. We deliver uncompromised quality, rigorous testing, and exceptional customer support right to your doorstep.
+                    India&apos;s most trusted destination for premium refurbished tech. We deliver uncompromised quality, rigorous testing, and exceptional customer support right to your doorstep.
                   </p>
-                  <div className="flex gap-4">
-                     <a href="#" className="w-10 h-10 bg-slate-800/50 border border-slate-700 rounded-full flex items-center justify-center hover:bg-blue-600 hover:border-blue-600 transition-all text-slate-300 hover:text-white"><Facebook size={18}/></a>
-                     <a href="#" className="w-10 h-10 bg-slate-800/50 border border-slate-700 rounded-full flex items-center justify-center hover:bg-pink-600 hover:border-pink-600 transition-all text-slate-300 hover:text-white"><Instagram size={18}/></a>
-                     <a href="#" className="w-10 h-10 bg-slate-800/50 border border-slate-700 rounded-full flex items-center justify-center hover:bg-blue-400 hover:border-blue-400 transition-all text-slate-300 hover:text-white"><Twitter size={18}/></a>
-                  </div>
+                  
                </div>
                
                <div className="lg:col-span-2">

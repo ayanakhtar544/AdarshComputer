@@ -13,8 +13,7 @@ import toast from "react-hot-toast";
 import { 
   Laptop, ShieldCheck, Truck, ShoppingBag, Heart, Share2, Star, 
   RefreshCcw, CheckCircle, Zap, Minus, Plus, Cpu, MemoryStick, Battery,
-  ChevronRight, ArrowRight, MapPin, Phone, Mail, Facebook, 
-  Instagram, Twitter, CreditCard, ChevronLeft, AlertCircle, User, Search, Home
+  ChevronRight, ArrowRight, MapPin, Phone, Mail, CreditCard, ChevronLeft, AlertCircle, User, Search, Home
 } from "lucide-react";
 
 // ============================================================================
