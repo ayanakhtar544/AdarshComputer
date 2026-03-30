@@ -37,11 +37,11 @@ const DUMMY_NOTIFICATIONS = [
 // Dummy User for Unlocked Dev Mode
 const DUMMY_USER = {
   displayName: "Admin (Dev Mode)",
-  email: "ADARSHComp@gmail.com"
+  email: "LappyDekho@gmail.com"
 };
 
 // ============================================================================
-// 2. SUB-COMPONENTS
+// 2. SUB-DekhoONENTS
 // ============================================================================
 
 // --- A. Dynamic Breadcrumbs ---
@@ -87,7 +87,7 @@ const DesktopSidebar = ({ pathname, isCollapsed, setIsCollapsed }) => (
              <Monitor size={20} strokeWidth={2.5}/>
           </div>
           <div className="flex flex-col whitespace-nowrap">
-             <h2 className="text-xl font-black tracking-tighter text-white leading-none">ADARSHComp<span className="text-red-600">.</span></h2>
+             <h2 className="text-xl font-black tracking-tighter text-white leading-none">LappyDekho<span className="text-red-600">.</span></h2>
              <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-500 mt-1">Admin Panel</p>
           </div>
        </div>
@@ -290,7 +290,7 @@ const MobileHeader = ({ setIsDrawerOpen }) => (
         </button>
         <div className="flex items-center gap-2">
            <div className="bg-red-600 p-1.5 rounded-lg shadow-inner"><Monitor size={18} strokeWidth={2.5}/></div>
-           <h1 className="font-black text-xl tracking-tighter">ADARSHComp</h1>
+           <h1 className="font-black text-xl tracking-tighter">LappyDekho</h1>
         </div>
      </div>
      <div className="relative p-2 bg-slate-800 rounded-full text-slate-300">
@@ -386,7 +386,7 @@ const MobileBottomNav = ({ pathname }) => (
 );
 
 // ============================================================================
-// 3. MAIN ADMIN LAYOUT COMPONENT (Unlocked Dev Mode)
+// 3. MAIN ADMIN LAYOUT DekhoONENT (Unlocked Dev Mode)
 // ============================================================================
 
 export default function AdminLayout({ children }) {

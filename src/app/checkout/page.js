@@ -61,7 +61,7 @@ export default function CheckoutPage() {
       const docRef = await addDoc(collection(db, "orders"), newOrder);
       
       // 3. Generate WhatsApp Message
-      let message = `*NEW ORDER ALERT (Adarsh Computer)* 🚀\n\n`;
+      let message = `*NEW ORDER ALERT (Lappy Dekhouter)* 🚀\n\n`;
       message += `*Order ID:* #${docRef.id.slice(0,8).toUpperCase()}\n`;
       message += `*Name:* ${formData.name}\n`;
       message += `*Phone:* ${formData.phone}\n`;
@@ -72,7 +72,7 @@ export default function CheckoutPage() {
       });
       message += `\n*Total Amount: ₹${finalAmount}* (Incl. 99 Packaging)`;
       
-      const whatsappUrl = `https://wa.me/919123188988?text=${encodeURIComponent(message)}`;
+      const whatsappUrl = `https://wa.me/919123188988?text=${encodeURIDekhoonent(message)}`;
 
       // 4. Cleanup & Redirect
       clearCart();

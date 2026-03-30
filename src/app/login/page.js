@@ -62,14 +62,14 @@ export default function LoginPage() {
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-red-600/20 to-transparent pointer-events-none"></div>
         <Link href="/" className="relative z-10 flex items-center gap-3">
           <div className="bg-red-600 text-white p-3 rounded-xl"><Laptop size={28} /></div>
-          <h1 className="text-3xl font-black text-white tracking-tighter uppercase">ADARSH<span className="text-red-500">Comp</span></h1>
+          <h1 className="text-3xl font-black text-white tracking-tighter uppercase">Lappy<span className="text-red-500">Dekho</span></h1>
         </Link>
         <div className="relative z-10">
           <h2 className="text-4xl font-black text-white mb-6 tracking-tight leading-tight">Your Premium<br/>Tech Destination</h2>
           <p className="text-slate-400 font-medium max-w-md leading-relaxed">Join thousands of happy customers. Create an account to track your orders, save wishlists, and get exclusive discounts.</p>
         </div>
         <div className="relative z-10 text-xs font-bold text-slate-600 uppercase tracking-widest">
-          © {new Date().getFullYear()} ADARSH Comp All Rights Reserved.
+          © {new Date().getFullYear()} Lappy Dekho All Rights Reserved.
         </div>
       </div>
 
@@ -78,7 +78,7 @@ export default function LoginPage() {
         {/* Mobile Logo */}
         <Link href="/" className="md:hidden absolute top-6 left-6 flex items-center gap-2">
           <div className="bg-red-600 text-white p-2 rounded-lg"><Laptop size={20} /></div>
-          <h1 className="text-xl font-black text-slate-900 tracking-tighter uppercase">Rana<span className="text-red-600">Comp.</span></h1>
+          <h1 className="text-xl font-black text-slate-900 tracking-tighter uppercase">Rana<span className="text-red-600">Dekho.</span></h1>
         </Link>
 
         <div className="w-full max-w-md bg-white p-8 md:p-10 rounded-[2rem] shadow-2xl shadow-slate-200/50 border border-slate-100 mt-12 md:mt-0">
@@ -100,7 +100,7 @@ export default function LoginPage() {
 
           <div className="mb-6">
             <h2 className="text-2xl font-black text-slate-900 tracking-tight mb-2">
-               {isLoginView ? 'Welcome Back' : 'Join Rana Computers'}
+               {isLoginView ? 'Welcome Back' : 'Join Rana Dekhouters'}
             </h2>
             <p className="text-sm font-medium text-slate-500">
                {isLoginView ? 'Sign in to access your account and orders.' : 'Fill in your details to create a new account.'}

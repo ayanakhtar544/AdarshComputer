@@ -7,7 +7,7 @@ export default function Footer() {
         
         {/* Column 1: About */}
         <div>
-          <h3 className="text-xl font-bold mb-4 text-blue-400">Adarsh Computer</h3>
+          <h3 className="text-xl font-bold mb-4 text-blue-400">Lappy Dekhouter</h3>
           <p className="text-gray-400 text-sm">
             Best quality refurbished laptops and mobiles. Verified, tested, and certified with warranty.
           </p>
@@ -52,7 +52,7 @@ export default function Footer() {
       </div>
       
       <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-500">
-        © 2024 Adarsh Computer. All rights reserved.
+        © 2024 Lappy Dekhouter. All rights reserved.
       </div>
     </footer>
   );

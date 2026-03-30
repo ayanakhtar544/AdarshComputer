@@ -13,7 +13,7 @@ export default function AdminDashboard() {
   const [recentOrders, setRecentOrders] = useState([]);
 
   // 🚨 KISI BHI TARAH KA KOI LOGIN CHECK NAHI HAI YAHAN
-  // Component load hote hi seedha data fetch hoga
+  // Dekhoonent load hote hi seedha data fetch hoga
   useEffect(() => {
     fetchDashboardData();
   }, []);

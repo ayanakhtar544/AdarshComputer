@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 
 // ============================================================================
-// 1. SUB-COMPONENTS
+// 1. SUB-DekhoONENTS
 // ============================================================================
 
 const TrustBadge = ({ icon: Icon, title, sub }) => (
@@ -187,7 +187,7 @@ export default function ProductPage() {
               <Laptop size={20} strokeWidth={2.5} />
             </div>
             <span className="text-xl md:text-2xl font-black text-slate-900 tracking-tighter uppercase">
-              Rana<span className="text-red-600">Computers</span>
+              Rana<span className="text-red-600">Dekhouters</span>
             </span>
           </Link>
 
@@ -291,7 +291,7 @@ export default function ProductPage() {
                 </div>
               </div>
 
-              {/* 🚨 THE FIX: ULTRA-COMPACT DESCRIPTION */}
+              {/* 🚨 THE FIX: ULTRA-DekhoACT DESCRIPTION */}
               <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
                  <h3 className="text-xs font-black text-slate-900 uppercase tracking-widest mb-2 border-b border-slate-100 pb-2">Quick Overview</h3>
                  
@@ -376,7 +376,7 @@ export default function ProductPage() {
          <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
                <div>
-                  <h1 className="text-2xl font-black text-white tracking-tighter uppercase mb-4">Rana<span className="text-red-500">Computers</span></h1>
+                  <h1 className="text-2xl font-black text-white tracking-tighter uppercase mb-4">Rana<span className="text-red-500">Dekhouters</span></h1>
                   <p className="text-slate-400 text-sm leading-relaxed mb-6 font-medium">India's most trusted destination for premium refurbished tech.</p>
                </div>
                <div>
@@ -397,14 +397,14 @@ export default function ProductPage() {
                   <h3 className="font-bold text-white text-sm uppercase tracking-widest mb-5 border-l-2 border-red-600 pl-3">Contact</h3>
                   <ul className="space-y-3 text-sm text-slate-400">
                      <li className="flex items-center gap-3"><Phone size={16} className="text-red-600"/> <span className="text-white font-bold tracking-widest">+91 9123188988</span></li>
-                     <li className="flex items-center gap-3"><Mail size={16} className="text-red-600"/> <span>ranacomputers@gmail.com</span></li>
+                     <li className="flex items-center gap-3"><Mail size={16} className="text-red-600"/> <span>ranaDekhouters@gmail.com</span></li>
                   </ul>
                </div>
             </div>
          </div>
          <div className="border-t border-slate-800 bg-slate-950">
             <div className="max-w-[1400px] mx-auto px-6 py-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-bold text-slate-500 uppercase tracking-widest">
-               <p>© {new Date().getFullYear()} Rana Computers. All rights reserved.</p>
+               <p>© {new Date().getFullYear()} Rana Dekhouters. All rights reserved.</p>
                <p className="flex items-center gap-1"><ShieldCheck size={14} className="text-emerald-500"/> 100% Secure Checkout</p>
             </div>
          </div>

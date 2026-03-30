@@ -1,6 +1,6 @@
 "use client";
 import { useState } from 'react';
-import CheckoutModal from '@/components/CheckoutModal';
+import CheckoutModal from '@/Dekhoonents/CheckoutModal';
 import { ShieldCheck, Cpu, Battery, MemoryStick, ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from "framer-motion";

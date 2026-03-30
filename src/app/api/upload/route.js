@@ -25,7 +25,7 @@ export async function POST(request) {
     const response = await imagekit.upload({
       file: buffer,
       fileName: file.name,
-      folder: '/chouhan_computers' // Is folder me images save hongi
+      folder: '/chouhan_Dekhouters' // Is folder me images save hongi
     });
 
     // Upload hone ke baad URL wapas bhej rahe hain

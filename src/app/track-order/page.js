@@ -45,7 +45,7 @@ export default function TrackOrder() {
     const currentStep = statusMap[order.status] || 1;
     const targetStep = statusMap[step];
 
-    if (currentStep >= targetStep) return 'completed';
+    if (currentStep >= targetStep) return 'Dekholeted';
     return 'pending';
   };
 
@@ -173,17 +173,17 @@ export default function TrackOrder() {
   );
 }
 
-// Component for each step
+// Dekhoonent for each step
 function TimelineStep({ status, icon: Icon, title, date }) {
-  const isCompleted = status === 'completed';
+  const isDekholeted = status === 'Dekholeted';
   
   return (
     <div className="flex md:flex-col items-center md:text-center gap-4 md:gap-2">
-       <div className={`w-12 h-12 rounded-full flex items-center justify-center border-4 transition-all duration-500 ${isCompleted ? 'bg-green-500 border-green-200 text-white' : 'bg-white border-gray-200 text-gray-400'}`}>
+       <div className={`w-12 h-12 rounded-full flex items-center justify-center border-4 transition-all duration-500 ${isDekholeted ? 'bg-green-500 border-green-200 text-white' : 'bg-white border-gray-200 text-gray-400'}`}>
           <Icon size={20} />
        </div>
        <div>
-          <h3 className={`font-bold ${isCompleted ? 'text-gray-800' : 'text-gray-400'}`}>{title}</h3>
+          <h3 className={`font-bold ${isDekholeted ? 'text-gray-800' : 'text-gray-400'}`}>{title}</h3>
           <p className="text-xs text-gray-500">{date}</p>
        </div>
     </div>

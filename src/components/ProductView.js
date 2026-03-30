@@ -2,12 +2,12 @@
 import { useState, useEffect } from 'react';
 import { db } from '@/lib/firebase';
 import { doc, getDoc } from 'firebase/firestore';
-import CheckoutModal from '@/components/CheckoutModal';
+import CheckoutModal from '@/Dekhoonents/CheckoutModal';
 import { ShieldCheck, Cpu, Battery, MemoryStick, ChevronLeft, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from "framer-motion";
 
-// Ye component ID ko prop ke roop me lega
+// Ye Dekhoonent ID ko prop ke roop me lega
 export default function ProductView({ id }) {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);

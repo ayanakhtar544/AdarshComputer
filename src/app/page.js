@@ -7,7 +7,7 @@ import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { useCart } from "@/context/CartContext";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import { useAuth } from "@/context/AuthContext";
 
@@ -18,17 +18,16 @@ import {
 } from "lucide-react";
 
 // ============================================================================
-// 1. DATA CONFIGURATION & BRANDS
+// 1. DATA CONFIGURATION
 // ============================================================================
 
 const BRANDS = [
-  { name: 'Apple', bg: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&q=80&w=300' },
-  { name: 'HP', bg: 'https://images.unsplash.com/photo-1593640408182-31c70c8268f5?auto=format&fit=crop&q=80&w=300' },
-  { name: 'Dell', bg: 'https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&q=80&w=300' },
-  { name: 'Lenovo', bg: 'https://images.unsplash.com/photo-1588620353536-cbdf0d1e4eb4?auto=format&fit=crop&q=80&w=300' },
-  { name: 'Asus', bg: 'https://images.unsplash.com/photo-1593640495253-23196b27a87f?auto=format&fit=crop&q=80&w=300' },
-  { name: 'Acer', bg: 'https://images.unsplash.com/photo-1544108848-d3090632bde5?auto=format&fit=crop&q=80&w=300' },
-  { name: 'MSI', bg: 'https://images.unsplash.com/photo-1598550476439-6847785fcea6?auto=format&fit=crop&q=80&w=300' }
+  { name: "Apple", desc: "Premium MacBooks", color: "bg-slate-900 text-white" },
+  { name: "HP", desc: "Business & Gaming", color: "bg-blue-50 text-blue-700 border-blue-100" },
+  { name: "DELL", desc: "Reliable Workstations", color: "bg-indigo-50 text-indigo-700 border-indigo-100" },
+  { name: "Lenovo", desc: "ThinkPad Series", color: "bg-red-50 text-red-700 border-red-100" },
+  { name: "ASUS", desc: "ROG & ZenBook", color: "bg-slate-100 text-slate-800 border-slate-200" },
+  { name: "Acer", desc: "Creator Series", color: "bg-emerald-50 text-emerald-700 border-emerald-100" }
 ];
 
 const HERO_SLIDES = [
@@ -40,8 +39,17 @@ const HERO_SLIDES = [
   }
 ];
 
+// 🚨 NAYA: TESTIMONIALS DATA
+const TESTIMONIALS = [
+  { name: "Rahul S.", review: "Got a MacBook M1 at a crazy price. Condition is literally like new! Highly recommended.", rating: 5 },
+  { name: "Priya M.", review: "Customer support is top-notch. My Dell laptop arrived in 2 days safely packed.", rating: 5 },
+  { name: "Aman K.", review: "Was skeptical about refurbished, but LappyDekho proved me wrong. 100% genuine.", rating: 4 },
+  { name: "Sneha R.", review: "The 1-year warranty gives so much peace of mind. Excellent build quality.", rating: 5 },
+  { name: "Vikash T.", review: "Best place to buy gaming laptops on a budget. Asus ROG works perfectly.", rating: 5 },
+];
+
 // ============================================================================
-// 2. REUSABLE UI COMPONENTS (Premium Animated)
+// 2. REUSABLE UI COMPONENTS
 // ============================================================================
 
 const AnnouncementBar = () => (
@@ -50,7 +58,6 @@ const AnnouncementBar = () => (
   </div>
 );
 
-// --- Sleek Navbar ---
 const Navbar = ({ cartCount, toggleMenu, searchTerm, setSearchTerm }) => {
   const { user } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -68,11 +75,11 @@ const Navbar = ({ cartCount, toggleMenu, searchTerm, setSearchTerm }) => {
         <div className="flex items-center justify-between w-full md:w-auto gap-4 md:gap-8">
           <button onClick={toggleMenu} className="lg:hidden text-slate-900 hover:text-red-600 transition-colors"><Menu size={24}/></button>
           <Link href="/" className="flex items-center gap-2">
-            <span className="text-xl md:text-2xl font-black text-slate-900 tracking-tighter uppercase">ADARSH<span className="text-red-600">Comp</span></span>
+            <span className="text-xl md:text-2xl font-black text-slate-900 tracking-tighter uppercase">Lappy<span className="text-red-600">Dekho</span></span>
           </Link>
           
           <div className="hidden lg:flex items-center gap-6 font-bold text-xs uppercase tracking-widest text-slate-500">
-             <Link href="/products" className="hover:text-slate-900 transition-colors">Shop</Link>
+             <Link href="/product" className="hover:text-slate-900 transition-colors">Shop</Link>
              <Link href="/category/apple" className="hover:text-slate-900 transition-colors">MacBooks</Link>
              <Link href="/category/laptops" className="hover:text-slate-900 transition-colors">Windows</Link>
              <Link href="/contact" className="hover:text-slate-900 transition-colors">Contact</Link>
@@ -118,7 +125,6 @@ const Navbar = ({ cartCount, toggleMenu, searchTerm, setSearchTerm }) => {
   );
 };
 
-// --- Deal of the Day Timer ---
 const FlashSaleTimer = () => {
   const [timeLeft, setTimeLeft] = useState({ hours: 14, minutes: 25, seconds: 50 });
 
@@ -147,35 +153,20 @@ const FlashSaleTimer = () => {
   );
 };
 
-// --- Premium Product Card ---
 const ProductCard = ({ product, addToCart, router }) => {
   const [isWishlisted, setIsWishlisted] = useState(false);
   const hasImage = product.images && product.images.length > 0 && product.images[0] !== "";
-  
   const discount = product.originalPrice ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) : 0;
 
   return (
     <motion.div 
-      initial={{ opacity: 0, scale: 0.95 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.4 }}
+      initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.4 }}
       className="group flex flex-col bg-white border border-slate-100 hover:border-red-200 rounded-[1.5rem] overflow-hidden transition-all duration-300 hover:shadow-[0_20px_40px_-15px_rgba(220,38,38,0.15)] min-w-[160px] max-w-[300px] snap-start relative"
     >
-      <div 
-        className="relative w-full aspect-square bg-slate-50/50 group-hover:bg-white transition-colors duration-300 p-6 flex items-center justify-center cursor-pointer overflow-hidden"
-        onClick={() => router.push(`/product/${product.id}`)}
-      >
+      <div className="relative w-full aspect-square bg-slate-50/50 group-hover:bg-white transition-colors duration-300 p-6 flex items-center justify-center cursor-pointer overflow-hidden" onClick={() => router.push(`/product/${product.id}`)}>
         {discount > 0 && <span className="absolute top-3 left-3 bg-red-600 text-white text-[9px] font-black uppercase tracking-widest px-2.5 py-1 rounded shadow-sm z-10">{discount}% OFF</span>}
-        
         {hasImage ? (
-          <motion.img 
-             whileHover={{ scale: 1.08 }}
-             transition={{ type: "spring", stiffness: 300 }}
-             src={product.images[0]} 
-             alt={product.name} 
-             className="max-w-full max-h-full object-contain mix-blend-multiply drop-shadow-sm" 
-          />
+          <motion.img whileHover={{ scale: 1.08 }} transition={{ type: "spring", stiffness: 300 }} src={product.images[0]} alt={product.name} className="max-w-full max-h-full object-contain mix-blend-multiply drop-shadow-sm" />
         ) : (
           <Laptop className="w-12 h-12 text-slate-300" />
         )}
@@ -183,32 +174,17 @@ const ProductCard = ({ product, addToCart, router }) => {
 
       <div className="p-4 md:p-5 flex flex-col flex-grow bg-white border-t border-slate-50 z-10">
         <p className="text-[9px] font-black text-slate-400 bg-slate-100 px-2 py-0.5 rounded-sm inline-block w-fit uppercase tracking-widest mb-2">{product.brand || "Premium"}</p>
-        <h3 
-          className="text-sm md:text-base font-bold text-slate-900 line-clamp-2 leading-snug mb-3 cursor-pointer group-hover:text-red-600 transition-colors"
-          onClick={() => router.push(`/product/${product.id}`)}
-        >
-          {product.name}
-        </h3>
-        
+        <h3 className="text-sm md:text-base font-bold text-slate-900 line-clamp-2 leading-snug mb-3 cursor-pointer group-hover:text-red-600 transition-colors" onClick={() => router.push(`/product/${product.id}`)}>{product.name}</h3>
         <div className="mt-auto mb-5 flex items-end gap-2">
           <span className="text-lg md:text-xl font-black text-slate-900 tracking-tight">₹{Number(product.price).toLocaleString()}</span>
           {product.originalPrice && <span className="text-xs text-slate-400 line-through font-medium pb-1">₹{Number(product.originalPrice).toLocaleString()}</span>}
         </div>
 
         <div className="flex items-center gap-2 mt-auto">
-           <motion.button 
-             whileTap={{ scale: 0.9 }}
-             onClick={() => setIsWishlisted(!isWishlisted)}
-             className={`p-3 rounded-xl border transition-all duration-300 ${isWishlisted ? 'bg-red-50 border-red-200 text-red-600 shadow-inner' : 'bg-white border-slate-200 text-slate-400 hover:border-red-200 hover:text-red-600'}`}
-           >
+           <motion.button whileTap={{ scale: 0.9 }} onClick={() => setIsWishlisted(!isWishlisted)} className={`p-3 rounded-xl border transition-all duration-300 ${isWishlisted ? 'bg-red-50 border-red-200 text-red-600 shadow-inner' : 'bg-white border-slate-200 text-slate-400 hover:border-red-200 hover:text-red-600'}`}>
              <Heart size={18} fill={isWishlisted ? "currentColor" : "none"} className={isWishlisted ? "animate-pulse" : ""} />
            </motion.button>
-           
-           <motion.button 
-             whileTap={{ scale: 0.95 }}
-             onClick={() => { addToCart(product); toast.success("Added to Cart!"); }}
-             className="flex-1 bg-slate-900 text-white font-bold text-xs uppercase tracking-widest py-3.5 rounded-xl hover:bg-red-600 transition-colors shadow-md shadow-slate-900/10 hover:shadow-red-600/30"
-           >
+           <motion.button whileTap={{ scale: 0.95 }} onClick={() => { addToCart(product); toast.success("Added to Cart!"); }} className="flex-1 bg-slate-900 text-white font-bold text-xs uppercase tracking-widest py-3.5 rounded-xl hover:bg-red-600 transition-colors shadow-md shadow-slate-900/10 hover:shadow-red-600/30">
              Buy Now
            </motion.button>
         </div>
@@ -217,14 +193,10 @@ const ProductCard = ({ product, addToCart, router }) => {
   );
 };
 
-// --- Dynamic Animated Product Row (With "No Product" Logic) ---
 const ProductRow = ({ title, icon: Icon, products, link, addToCart, router }) => {
   return (
     <motion.section 
-       initial={{ opacity: 0, y: 30 }}
-       whileInView={{ opacity: 1, y: 0 }}
-       viewport={{ once: true, margin: "-50px" }}
-       transition={{ duration: 0.6, ease: "easeOut" }}
+       initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.6, ease: "easeOut" }}
        className="py-10 md:py-14 border-t border-slate-100"
     >
       <div className="flex items-end justify-between mb-8 px-4 md:px-0">
@@ -236,21 +208,15 @@ const ProductRow = ({ title, icon: Icon, products, link, addToCart, router }) =>
          </Link>
       </div>
       
-      {/* Fallback agar category me product nahi hai */}
       {(!products || products.length === 0) ? (
          <div className="mx-4 md:mx-0 py-12 px-6 flex flex-col items-center justify-center bg-slate-50 rounded-[2rem] border-2 border-dashed border-slate-200 text-center">
-            <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-sm mb-4">
-               <Laptop size={32} className="text-slate-300"/>
-            </div>
+            <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-sm mb-4"><Laptop size={32} className="text-slate-300"/></div>
             <h3 className="text-lg font-black text-slate-800 mb-1">No Product Added Yet</h3>
             <p className="text-sm text-slate-500 max-w-sm">We are currently updating our inventory for {title}. Please check back later!</p>
          </div>
       ) : (
-         /* Products Grid/Scroll */
          <div className="flex overflow-x-auto gap-4 md:grid md:grid-cols-4 lg:grid-cols-5 md:gap-6 hide-scrollbar px-4 md:px-0 pb-6 snap-x">
-            {products.slice(0, 10).map(p => (
-               <ProductCard key={p.id} product={p} addToCart={addToCart} router={router} />
-            ))}
+            {products.slice(0, 10).map(p => <ProductCard key={p.id} product={p} addToCart={addToCart} router={router} />)}
          </div>
       )}
     </motion.section>
@@ -269,7 +235,11 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
 
+  // 🚨 HYDRATION FIX: State to ensure client rendering
+  const [isMounted, setIsMounted] = useState(false);
+
   useEffect(() => {
+    setIsMounted(true);
     const fetchProducts = async () => {
       try {
         const q = query(collection(db, "products"), orderBy("createdAt", "desc"));
@@ -285,20 +255,16 @@ export default function Home() {
     fetchProducts();
   }, []);
 
-  // Safe category check function
   const checkCat = (p, cat) => {
     if (!p) return false;
     const c = p.category;
     if (Array.isArray(c)) return c.some(x => x && x.toLowerCase() === cat.toLowerCase());
     if (typeof c === 'string') return c.toLowerCase() === cat.toLowerCase();
-    
-    // Fallback to name/brand checking
     const nameStr = p.name ? p.name.toLowerCase() : '';
     const brandStr = p.brand ? p.brand.toLowerCase() : '';
     return nameStr.includes(cat.toLowerCase()) || brandStr.includes(cat.toLowerCase());
   };
 
-  // Organize Data for Rows
   const dealOfTheDay = products.slice(0, 10); 
   const appleProducts = products.filter(p => checkCat(p, 'apple') || checkCat(p, 'macbook'));
   const hpProducts = products.filter(p => checkCat(p, 'hp'));
@@ -307,11 +273,13 @@ export default function Home() {
   const asusProducts = products.filter(p => checkCat(p, 'asus'));
   const latestArrivals = products.slice(0, 15);
 
-  // Live Search Filtering
   const searchResults = products.filter(p => 
     (p.name && p.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
     (p.brand && p.brand.toLowerCase().includes(searchTerm.toLowerCase()))
   );
+
+  // 🚨 Prevent Hydration Error
+  if (!isMounted) return null;
 
   if (loading) return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-white">
@@ -323,33 +291,30 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white font-sans text-slate-900 selection:bg-red-600 selection:text-white overflow-x-hidden">
       
-      <style dangerouslySetInnerHTML={{__html: `
+      {/* 🚨 SAFE CSS FOR MARQUEE & SCROLLBARS */}
+      <style suppressHydrationWarning>{`
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        .animate-marquee { animation: marquee 30s linear infinite; }
+        .animate-marquee { animation: marquee 35s linear infinite; }
         .animate-marquee:hover { animation-play-state: paused; }
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-      `}} />
+      `}</style>
 
       <AnnouncementBar />
-      <Navbar cartCount={cart.length} toggleMenu={() => console.log('Open Menu')} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <Navbar cartCount={cart?.length || 0} toggleMenu={() => console.log('Menu')} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
       <main className="max-w-[1400px] mx-auto px-0 md:px-8">
         
         {searchTerm ? (
-          <motion.section 
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} 
-            className="py-10 md:py-16 px-4 md:px-0 min-h-[60vh]"
-          >
+          <motion.section initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="py-10 md:py-16 px-4 md:px-0 min-h-[60vh]">
              <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-8">
                 <h2 className="text-2xl md:text-4xl font-black text-slate-900 tracking-tight">Search Results</h2>
                 <span className="text-sm font-bold text-red-600 bg-red-50 px-4 py-1.5 rounded-full">{searchResults.length} Found</span>
              </div>
-             
              {searchResults.length === 0 ? (
                <div className="text-center py-20 flex flex-col items-center">
                   <div className="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center mb-6"><Search size={40} className="text-slate-300"/></div>
-                  <p className="text-slate-500 font-medium text-lg">No products found for "<span className="text-slate-900 font-bold">{searchTerm}</span>&quot;</p>
+                  <p className="text-slate-500 font-medium text-lg">No products found for "<span className="text-slate-900 font-bold">{searchTerm}</span>"</p>
                   <button onClick={() => setSearchTerm('')} className="mt-6 bg-slate-900 text-white px-8 py-3 rounded-xl font-bold hover:bg-red-600 transition-colors shadow-lg">Clear Search</button>
                </div>
              ) : (
@@ -403,34 +368,29 @@ export default function Home() {
               ))}
             </section>
 
+            {/* 🚨 THE FIX: MANUAL SCROLL BRANDS WITHOUT BROKEN IMAGES */}
             <section className="py-12 md:py-16 overflow-hidden">
                <h2 className="text-center text-2xl font-black text-slate-900 uppercase tracking-tight mb-10 flex items-center justify-center gap-2">
                  <Star className="text-yellow-400" fill="currentColor"/> Explore Top Brands
                </h2>
                
-               <div className="relative w-full flex overflow-hidden group">
-                  <div className="flex w-max animate-marquee gap-6 md:gap-10 px-4">
-                     {[...BRANDS, ...BRANDS].map((brand, i) => (
-                        <Link 
-                          key={i} href={`/category/${brand.name.toLowerCase()}`}
-                          className="relative w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden group/brand border-[4px] border-white flex-shrink-0 cursor-pointer shadow-lg hover:shadow-red-600/30 hover:border-red-500 transition-all duration-300"
-                        >
-                           <img src={brand.bg} alt={brand.name} className="absolute inset-0 w-full h-full object-cover group-hover/brand:scale-110 transition-transform duration-700"/>
-                           <div className="absolute inset-0 bg-slate-900/40 group-hover/brand:bg-slate-900/60 transition-colors"></div>
-                           <div className="absolute inset-0 flex flex-col items-center justify-center z-10 text-white">
-                              <span className="text-3xl md:text-4xl drop-shadow-lg mb-1 group-hover/brand:-translate-y-1 transition-transform">{brand.logo}</span>
-                              <span className="text-[10px] md:text-xs font-black uppercase tracking-widest drop-shadow-md">{brand.name}</span>
-                           </div>
-                        </Link>
-                     ))}
-                  </div>
+               {/* No animate-marquee, manual snap scroll */}
+               <div className="flex overflow-x-auto gap-4 md:gap-6 px-4 md:px-0 snap-x hide-scrollbar pb-6">
+                  {BRANDS.map((brand, i) => (
+                     <Link 
+                       key={i} href={`/category/${brand.name.toLowerCase()}`}
+                       className={`relative w-40 h-40 md:w-48 md:h-48 rounded-[2rem] flex-shrink-0 cursor-pointer shadow-sm hover:shadow-lg transition-all duration-300 border border-slate-100 flex flex-col items-center justify-center p-4 snap-start ${brand.color}`}
+                     >
+                        <span className="text-2xl md:text-3xl font-black uppercase tracking-widest drop-shadow-md">{brand.name}</span>
+                        <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest mt-2 opacity-80 text-center">{brand.desc}</span>
+                     </Link>
+                  ))}
                </div>
             </section>
 
-            {/* Tagda Deal of the Day Section */}
             <motion.section 
                initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
-               className="my-16 py-12 px-6 md:px-12 rounded-[2.5rem] bg-slate-900 border border-slate-800 shadow-[0_30px_60px_-15px_rgba(220,38,38,0.3)] relative overflow-hidden"
+               className="my-8 py-12 px-6 md:px-12 rounded-[2.5rem] bg-slate-900 border border-slate-800 shadow-[0_30px_60px_-15px_rgba(220,38,38,0.3)] relative overflow-hidden"
             >
                <div className="absolute top-0 left-0 w-72 h-72 bg-red-600/30 rounded-full blur-[100px] pointer-events-none"></div>
                <div className="absolute bottom-0 right-0 w-72 h-72 bg-orange-500/20 rounded-full blur-[100px] pointer-events-none"></div>
@@ -441,7 +401,6 @@ export default function Home() {
                     <h2 className="text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-500 to-red-500 tracking-tight uppercase flex items-center justify-center md:justify-start gap-3">
                       <Zap className="text-amber-400" size={40}/> Deal of the Day
                     </h2>
-                    <p className="text-slate-400 mt-3 font-medium">Grab these premium gadgets before the timer runs out!</p>
                   </div>
                   <div className="mt-6 md:mt-0 flex items-center gap-4 bg-black/40 backdrop-blur-md border border-white/10 px-6 py-4 rounded-2xl shadow-xl">
                      <Clock className="text-orange-400" size={24} />
@@ -449,18 +408,14 @@ export default function Home() {
                   </div>
                </div>
                
-               {/* Deal of the Day Products OR Empty State */}
                {(!dealOfTheDay || dealOfTheDay.length === 0) ? (
                   <div className="mx-4 md:mx-0 py-12 px-6 flex flex-col items-center justify-center bg-slate-800/50 rounded-[2rem] border-2 border-dashed border-slate-700 text-center relative z-10">
                      <Zap size={32} className="text-slate-500 mb-4"/>
                      <h3 className="text-lg font-black text-slate-300 mb-1">No Flash Deals Right Now</h3>
-                     <p className="text-sm text-slate-500 max-w-sm">We are cooking up some crazy discounts. Check back soon!</p>
                   </div>
                ) : (
                   <div className="flex overflow-x-auto gap-4 md:grid md:grid-cols-4 lg:grid-cols-5 md:gap-6 hide-scrollbar pb-6 snap-x relative z-10">
-                     {dealOfTheDay.map(p => (
-                        <ProductCard key={p.id} product={p} addToCart={addToCart} router={router} />
-                     ))}
+                     {dealOfTheDay.map(p => <ProductCard key={p.id} product={p} addToCart={addToCart} router={router} />)}
                   </div>
                )}
             </motion.section>
@@ -497,7 +452,7 @@ export default function Home() {
 
             <motion.section 
                initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
-               className="py-16 mt-10 border-t-4 border-slate-900 rounded-t-[3rem] bg-slate-50"
+               className="py-16 mt-10 border-t-4 border-slate-900 rounded-[3rem] bg-slate-50 mb-10"
             >
                <div className="max-w-[1400px] mx-auto">
                   <div className="flex flex-col items-center text-center mb-12 px-4">
@@ -507,9 +462,7 @@ export default function Home() {
                   </div>
                   
                   <div className="flex overflow-x-auto gap-4 md:grid md:grid-cols-4 lg:grid-cols-5 md:gap-6 hide-scrollbar px-4 md:px-8 pb-8 snap-x">
-                     {latestArrivals.map(p => (
-                        <ProductCard key={p.id} product={p} addToCart={addToCart} router={router} />
-                     ))}
+                     {latestArrivals.map(p => <ProductCard key={p.id} product={p} addToCart={addToCart} router={router} />)}
                   </div>
 
                   <div className="flex justify-center mt-6">
@@ -525,6 +478,38 @@ export default function Home() {
         )}
       </main>
 
+      {/* 🚨 THE FIX: AUTO SCROLLING TESTIMONIALS SECTION */}
+      {!searchTerm && (
+        <section className="py-16 md:py-24 bg-white overflow-hidden border-t border-slate-100">
+           <div className="text-center mb-12 px-6">
+              <span className="bg-red-50 text-red-600 font-bold text-xs uppercase tracking-widest px-4 py-1.5 rounded-full mb-4 inline-block">Real Reviews</span>
+              <h2 className="text-3xl md:text-5xl font-black text-slate-900 tracking-tight mb-4">Loved by Thousands</h2>
+              <p className="text-slate-500 font-medium text-sm md:text-base max-w-lg mx-auto">Don't just take our word for it. Read what our verified customers have to say about their LappyDekho experience.</p>
+           </div>
+           
+           <div className="relative w-full flex overflow-hidden">
+              {/* Fade edges */}
+              <div className="absolute left-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-r from-white to-transparent z-10"></div>
+              <div className="absolute right-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-l from-white to-transparent z-10"></div>
+              
+              <div className="flex w-max animate-marquee gap-6 px-4">
+                 {[...TESTIMONIALS, ...TESTIMONIALS].map((t, i) => (
+                    <div key={i} className="w-[300px] md:w-[400px] bg-slate-50 p-6 md:p-8 rounded-[2rem] border border-slate-100 shadow-sm flex-shrink-0">
+                       <div className="flex text-yellow-400 mb-4">
+                          {[...Array(t.rating)].map((_, j) => <Star key={j} size={16} fill="currentColor" />)}
+                       </div>
+                       <p className="text-slate-700 text-sm md:text-base font-medium mb-6 leading-relaxed">&quot;{t.review}&quot;</p>
+                       <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-black text-sm">{t.name.charAt(0)}</div>
+                          <h4 className="font-black text-slate-900 uppercase tracking-widest text-xs">{t.name}</h4>
+                       </div>
+                    </div>
+                 ))}
+              </div>
+           </div>
+        </section>
+      )}
+
       {/* ================= MEGA PREMIUM FOOTER ================= */}
       <footer className="bg-[#0B0F19] pt-20 pb-10 border-t-[4px] border-red-600 relative overflow-hidden font-sans">
          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-32 bg-red-600/10 blur-[120px] pointer-events-none"></div>
@@ -533,7 +518,7 @@ export default function Home() {
             
             <div className="bg-slate-900/50 border border-slate-800 rounded-[2rem] p-8 md:p-12 mb-16 flex flex-col md:flex-row items-center justify-between gap-8 backdrop-blur-sm">
                <div className="text-center md:text-left">
-                  <h3 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight mb-2">Join The ADARSHComp VIP Club</h3>
+                  <h3 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight mb-2">Join The LappyDekho VIP Club</h3>
                   <p className="text-slate-400 text-sm md:text-base">Get exclusive early access to flash sales, custom PC builds, and special discounts.</p>
                </div>
                <div className="w-full md:w-auto flex flex-col sm:flex-row gap-3">
@@ -556,13 +541,12 @@ export default function Home() {
                        <Laptop size={24} strokeWidth={2.5} />
                     </div>
                     <div>
-                       <h1 className="text-2xl font-black text-white tracking-tighter leading-none">ADARSH<span className="text-red-500">Comp</span></h1>
+                       <h1 className="text-2xl font-black text-white tracking-tighter leading-none">Lappy<span className="text-red-500">Dekho</span></h1>
                     </div>
                   </Link>
                   <p className="text-slate-400 text-sm leading-relaxed mb-8 font-medium">
                     India&apos;s most trusted destination for premium refurbished tech. We deliver uncompromised quality, rigorous testing, and exceptional customer support right to your doorstep.
                   </p>
-                  
                </div>
                
                <div className="lg:col-span-2">
@@ -572,7 +556,6 @@ export default function Home() {
                      <li><Link href="/category/apple" className="hover:text-red-500 hover:translate-x-1 inline-block transition-transform">MacBooks</Link></li>
                      <li><Link href="/category/laptops" className="hover:text-red-500 hover:translate-x-1 inline-block transition-transform">Windows Laptops</Link></li>
                      <li><Link href="/category/mobiles" className="hover:text-red-500 hover:translate-x-1 inline-block transition-transform">Smartphones</Link></li>
-                     <li><Link href="/category/gaming" className="hover:text-red-500 hover:translate-x-1 inline-block transition-transform">Gaming Custom PCs</Link></li>
                   </ul>
                </div>
 
@@ -583,7 +566,6 @@ export default function Home() {
                      <li><Link href="/warranty" className="hover:text-red-500 hover:translate-x-1 inline-block transition-transform">Warranty Registration</Link></li>
                      <li><Link href="/return-policy" className="hover:text-red-500 hover:translate-x-1 inline-block transition-transform">Returns & Replacements</Link></li>
                      <li><Link href="/terms" className="hover:text-red-500 hover:translate-x-1 inline-block transition-transform">Terms & Conditions</Link></li>
-                     <li><Link href="/privacy" className="hover:text-red-500 hover:translate-x-1 inline-block transition-transform">Privacy Policy</Link></li>
                   </ul>
                </div>
                
@@ -600,7 +582,7 @@ export default function Home() {
                      </li>
                      <li className="flex gap-4 items-center group cursor-pointer">
                         <Mail size={20} className="text-red-600 flex-shrink-0 group-hover:scale-110 transition-transform"/> 
-                        <span className="group-hover:text-white transition-colors">ADARSHComp@gmail.com</span>
+                        <span className="group-hover:text-white transition-colors">LappyDekho@gmail.com</span>
                      </li>
                   </ul>
                </div>
@@ -610,12 +592,10 @@ export default function Home() {
 
          <div className="border-t border-slate-800 bg-slate-950">
             <div className="max-w-[1400px] mx-auto px-6 py-6 flex flex-col md:flex-row justify-between items-center gap-6">
-               
                <p className="text-xs font-bold text-slate-500 uppercase tracking-widest text-center md:text-left">
-                  © {new Date().getFullYear()} ADARSH Comp. All rights reserved. <br className="md:hidden"/>
+                  © {new Date().getFullYear()} Lappy Dekho. All rights reserved. <br className="md:hidden"/>
                   <span className="text-slate-600 font-medium ml-0 md:ml-2">Engineered for Performance.</span>
                </p>
-               
                <div className="flex items-center gap-4">
                  <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-1">
                     <ShieldCheck size={14} className="text-emerald-500"/> 100% Secure
@@ -627,12 +607,8 @@ export default function Home() {
                     <div className="bg-slate-900 border border-slate-800 text-slate-300 px-3 py-1.5 rounded-md text-[10px] font-black tracking-wider flex items-center">
                        <span className="text-orange-500">Master</span>Card
                     </div>
-                    <div className="bg-slate-900 border border-slate-800 text-slate-300 px-3 py-1.5 rounded-md text-[10px] font-black tracking-wider">
-                       UPI
-                    </div>
                  </div>
                </div>
-
             </div>
          </div>
       </footer>

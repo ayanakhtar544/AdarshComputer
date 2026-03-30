@@ -47,7 +47,7 @@ export default function CustomersPage() {
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
-    link.setAttribute("download", `Customers_ChouhanComputers_${new Date().toISOString().split('T')[0]}.csv`);
+    link.setAttribute("download", `Customers_ChouhanDekhouters_${new Date().toISOString().split('T')[0]}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -118,7 +118,7 @@ export default function CustomersPage() {
 
       {/* --- PRINT HEADER (Only visible on PDF Print) --- */}
       <div className="hidden print:block mb-6 pb-4 border-b-2 border-slate-900">
-         <h2 className="text-2xl font-black text-slate-900">Adarsh Computer</h2>
+         <h2 className="text-2xl font-black text-slate-900">Lappy Dekhouter</h2>
          <p className="text-sm font-bold text-slate-500 mt-1">Customer Database Report - {new Date().toLocaleDateString()}</p>
       </div>
 
@@ -156,7 +156,7 @@ export default function CustomersPage() {
                 <td className="p-4">
                    <p className="text-sm font-bold text-slate-900">{user.name || "Unknown User"}</p>
                    <div className="flex items-center gap-1 mt-1">
-                      {user.email === 'chouhancomputers@gmail.com' ? (
+                      {user.email === 'chouhanDekhouters@gmail.com' ? (
                          <span className="bg-red-50 text-red-600 px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest flex items-center gap-1 w-fit"><ShieldCheck size={10}/> Admin</span>
                       ) : (
                          <span className="bg-slate-100 text-slate-500 px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest flex items-center gap-1 w-fit"><User size={10}/> Customer</span>
