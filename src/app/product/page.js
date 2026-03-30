@@ -14,7 +14,7 @@ import {
 // --- CATEGORIES FOR FILTER ---
 const CATEGORIES = ["All", "Laptops", "Mobiles", "Apple", "Gaming", "Accessories"];
 
-// --- PRODUCT CARD DekhoONENT ---
+// --- PRODUCT CARD CompONENT ---
 const ProductCard = ({ product, addToCart, router }) => {
   const hasImage = product.images && product.images.length > 0 && product.images[0] !== "";
   const discount = product.originalPrice ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) : 0;

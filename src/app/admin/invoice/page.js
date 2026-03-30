@@ -54,7 +54,7 @@ export default function InvoiceGenerator() {
     msg += `\n*Final Amount: ₹${finalTotal}*\n\n`;
     msg += `Thank you for shopping with us! 🚀`;
 
-    const waUrl = `https://wa.me/91${customer.phone}?text=${encodeURIDekhoonent(msg)}`;
+    const waUrl = `https://wa.me/91${customer.phone}?text=${encodeURIComponent(msg)}`;
     window.open(waUrl, '_blank');
   };
 
@@ -87,7 +87,7 @@ export default function InvoiceGenerator() {
             <div>
                <div className="flex items-center gap-2 text-red-600 mb-2">
                  <Monitor size={32} strokeWidth={2.5}/>
-                 <h2 className="text-3xl font-black tracking-tighter text-slate-900">LappyDekho</h2>
+                 <h2 className="text-3xl font-black tracking-tighter text-slate-900">Ad</h2>
                </div>
                <p className="text-slate-500 text-sm">Best Refurbished Tech Store</p>
                <p className="text-slate-500 text-sm">Patna, Bihar, India - 800001</p>
@@ -183,7 +183,7 @@ export default function InvoiceGenerator() {
          </div>
          
          <div className="mt-12 text-center text-xs font-bold text-slate-300 uppercase tracking-widest hidden print:block">
-            Dekhouter Generated Invoice - Signature Not Required
+            Computer Generated Invoice - Signature Not Required
          </div>
 
       </div>

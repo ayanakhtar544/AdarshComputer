@@ -110,7 +110,7 @@ export default function BulkUploadPage() {
           }
         }
 
-        toast.success(`Upload Dekholete! ${successCount} products added.`);
+        toast.success(`Upload Complete! ${successCount} products added.`);
         setLogs(prev => [...prev, { type: 'success', msg: `Successfully uploaded ${successCount} out of ${products.length} products.` }]);
         setFile(null);
 

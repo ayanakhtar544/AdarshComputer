@@ -593,7 +593,7 @@ export default function Home() {
          <div className="border-t border-slate-800 bg-slate-950">
             <div className="max-w-[1400px] mx-auto px-6 py-6 flex flex-col md:flex-row justify-between items-center gap-6">
                <p className="text-xs font-bold text-slate-500 uppercase tracking-widest text-center md:text-left">
-                  © {new Date().getFullYear()} Lappy Dekho. All rights reserved. <br className="md:hidden"/>
+                  © {new Date().getFullYear()} LappyDekho. All rights reserved. <br className="md:hidden"/>
                   <span className="text-slate-600 font-medium ml-0 md:ml-2">Engineered for Performance.</span>
                </p>
                <div className="flex items-center gap-4">

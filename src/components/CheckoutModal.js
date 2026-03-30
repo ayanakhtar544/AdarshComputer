@@ -69,7 +69,7 @@ export default function CheckoutModal({ product, onClose }) {
       // Apna number yahan dalo (Country code ke sath bina + ke, e.g., 919876543210)
       const adminPhone = "919999999999"; 
       
-      const message = `*New Order: Lappy Dekhouter*%0A%0A` +
+      const message = `*New Order: Lappy Dekho*%0A%0A` +
         `📦 *Product:* ${product.name}%0A` +
         `💰 *Price:* ₹${product.price}%0A` +
         `👤 *Customer:* ${formData.name}%0A` +

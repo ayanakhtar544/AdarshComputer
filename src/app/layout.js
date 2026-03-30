@@ -7,7 +7,7 @@ import { AuthProvider } from '@/context/AuthContext'; // <--- NAYA IMPORT
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Lappy Dekhouter",
+  title: "Lapppy Dekho",
   description: "Best Refurbished Store",
 };
 

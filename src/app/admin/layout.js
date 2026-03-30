@@ -37,11 +37,11 @@ const DUMMY_NOTIFICATIONS = [
 // Dummy User for Unlocked Dev Mode
 const DUMMY_USER = {
   displayName: "Admin (Dev Mode)",
-  email: "LappyDekho@gmail.com"
+  email: "lappydekho@gmail.com"
 };
 
 // ============================================================================
-// 2. SUB-DekhoONENTS
+// 2. SUB-CompONENTS
 // ============================================================================
 
 // --- A. Dynamic Breadcrumbs ---
@@ -386,7 +386,7 @@ const MobileBottomNav = ({ pathname }) => (
 );
 
 // ============================================================================
-// 3. MAIN ADMIN LAYOUT DekhoONENT (Unlocked Dev Mode)
+// 3. MAIN ADMIN LAYOUT CompONENT (Unlocked Dev Mode)
 // ============================================================================
 
 export default function AdminLayout({ children }) {

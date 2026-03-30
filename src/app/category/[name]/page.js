@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowLeft, ShoppingCart, Star, PackageOpen, Award, Loader2 } from 'lucide-react';
 
-// --- PRODUCT CARD DekhoONENT ---
+// --- PRODUCT CARD CompONENT ---
 const ProductCard = ({ product, addToCart, router }) => {
   const hasImage = product.images && product.images.length > 0 && product.images[0] !== "";
   const discount = product.originalPrice ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) : 0;
@@ -57,7 +57,7 @@ const ProductCard = ({ product, addToCart, router }) => {
   );
 };
 
-// --- MAIN PAGE DekhoONENT ---
+// --- MAIN PAGE CompONENT ---
 export default function BrandCategoryPage() {
   const params = useParams();
   const router = useRouter();
@@ -73,7 +73,7 @@ export default function BrandCategoryPage() {
     const rawParam = params?.name || params?.brand || params?.category || '';
     
     if (rawParam) {
-      const decodedName = decodeURIDekhoonent(rawParam).toUpperCase();
+      const decodedName = decodeURIComponent(rawParam).toUpperCase();
       setBrandName(decodedName);
       
       const fetchBrandProducts = async () => {

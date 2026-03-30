@@ -16,7 +16,7 @@ import {
 import toast from 'react-hot-toast';
 
 // ============================================================================
-// 1. HELPER DekhoONENTS
+// 1. HELPER CompONENTS
 // ============================================================================
 
 const getStatusColor = (status) => {
@@ -38,7 +38,7 @@ const getStatusIcon = (status) => {
 };
 
 // ============================================================================
-// 2. MAIN PROFILE PAGE DekhoONENT
+// 2. MAIN PROFILE PAGE CompONENT
 // ============================================================================
 
 export default function ProfilePage() {
@@ -71,7 +71,7 @@ export default function ProfilePage() {
           const snapshot = await getDocs(q);
           const userOrders = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
           
-          // Sort by date manually if orderBy requires Dekholex index
+          // Sort by date manually if orderBy requires Complex index
           userOrders.sort((a, b) => b.createdAt?.seconds - a.createdAt?.seconds);
           
           setOrders(userOrders);

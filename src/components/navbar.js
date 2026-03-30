@@ -10,7 +10,7 @@ export default function Navbar() {
           {/* 1. Logo Section */}
           <Link href="/" className="flex items-center">
             <span className="text-2xl font-bold text-blue-600">CHOUHAN</span>
-            <span className="text-2xl font-bold text-gray-800 ml-1">DekhoUTERS</span>
+            <span className="text-2xl font-bold text-gray-800 ml-1">CompUTERS</span>
           </Link>
 
           {/* 2. Search Bar (Hidden on mobile) */}
